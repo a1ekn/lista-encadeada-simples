@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /*=============================================
     Declaração de Variáveis Globais
@@ -35,6 +36,8 @@ typedef struct list
 List *createList();
 void push(List *list, Datanode data);
 void printList(List *list);
+void pop(List *list);
+bool isEmpty(List *list);
 
 /*=============================================
     Função Main
@@ -66,6 +69,8 @@ int main()
 
     printList(list);
 
+    pop(list);
+    printList(list);
 }
 
 /*=============================================
@@ -100,11 +105,15 @@ void push(List *list, Datanode data)
 // mostra lista
 void printList(List *list)
 {
+    // Testa se lista está vazia e se sim não executa o que está abaixo
+    if (isEmpty(list))
+    {
+        printf("Lista vazia");
+        return;
+    }
+
     // pointer aponta para cabeça da lista
     Node *pointer = list->head;
-
-    if (pointer == NULL)
-        printf("Lista vazia");
 
     while (pointer)
     {
@@ -116,10 +125,32 @@ void printList(List *list)
     printf("\n");
 }
 
+// confere se a lista está vazia
+bool isEmpty(List *list)
+{
+    // faz comparação se size TRUE ou FALSE
+    return (list->size == 0);
+}
+
+// pop
+void pop(List *list)
+{
+    if (!isEmpty(list))
+    {
+        // ponteiro auxiliar pointer aponta para onde o head estava apontando (substituindo apontamento)
+        Node *pointer = list->head;
+        // trocar a head da lista para o next do pointer
+        list->head = pointer->next;
+        free(pointer);
+        list->size--;
+    }
+}
+
 /*=============================================
 
 1-lista criada
 2-Função push
 3-Mostra lista
+4-Função pop & isEmpty
 
 ===============================================*/
