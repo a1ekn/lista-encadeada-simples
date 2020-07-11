@@ -34,6 +34,7 @@ typedef struct list
 
 List *createList();
 void push(List *list, Datanode data);
+void printList(List *list);
 
 /*=============================================
     Função Main
@@ -47,14 +48,24 @@ int main()
 
     data.id = 4;
     push(list, data);
-    
+
     data.id = 8;
     push(list, data);
 
     data.id = 9;
     push(list, data);
 
-    printf("%d-%d-%d", list->head->data.id, list->head->next->data.id, list->head->next->next->data.id);
+    data.id = 1;
+    push(list, data);
+
+    data.id = 2;
+    push(list, data);
+
+    data.id = 7;
+    push(list, data);
+
+    printList(list);
+
 }
 
 /*=============================================
@@ -79,16 +90,36 @@ void push(List *list, Datanode data)
 
     //grava argumento passado
     node->data = data;
-    //ligar nó na cabeça da lista 
+    //ligar nó na cabeça da lista
     node->next = list->head;
     // cabeça da lista igual ao nó criado
     list->head = node;
     list->size++;
 }
 
+// mostra lista
+void printList(List *list)
+{
+    // pointer aponta para cabeça da lista
+    Node *pointer = list->head;
+
+    if (pointer == NULL)
+        printf("Lista vazia");
+
+    while (pointer)
+    {
+        printf("%d ", pointer->data.id);
+        // pointer vai ser o próximo
+        pointer = pointer->next;
+    }
+
+    printf("\n");
+}
+
 /*=============================================
 
 1-lista criada
 2-Função push
+3-Mostra lista
 
 ===============================================*/
